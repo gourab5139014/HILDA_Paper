@@ -1,2 +1,0 @@
-# HILDA_Paper
-Paper
