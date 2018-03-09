@@ -27,3 +27,6 @@ sample-*.pdf
 *~
 *.bcf
 *.run.xml
+*.fls
+*.fdb_latexmk
+*.synctex.gz
