@@ -6,50 +6,17 @@ Without so much as a wiki page or README file documenting it, anyone who wants t
 If we're lucky, that person documents their efforts.  
 If not, the entire process repeats.
 
-In this paper we propose \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
-When first pointed at un- or poorly labeled CSV data, \systemname uses an internal knowledge base to provide suggestions for schema elements like column names.  
-Users ensure the labeling of a fragment of the schema that they are interested in, 
+To break this cycle of data abandonment, we propose \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
+Fundamentally, \systemname allows users to assemble schemas on-demand, both discovering and incrementally refining schema definitions in response to changing data needs.  
+To accomplish this, \systemname maintains a knowledge-base of both approximate, as well as exact schema labelings.
+First, approximate labelings derived from existing open-data sets, user-feedback, and expert-provided heuristics, jump-start the labeling process.
+When a user first points \systemname at a new tabular data set, \systemname provides users with a preliminary, default schema.
+As users confirm and/or override parts of the proposed schema, \systemname registers the mappings for anyone who uses the same dataset in the future.
 
-
-Users identify a subset of the schema that they are interested in: 
-
-
-
-
-
-table names, and other metadata documenting the 
-
-
-
-
-proposes an initial schema consisting of interpretable column names, a table name, and/or other contextual details. 
-
-
-
-
-When first invoked on an unlabeled , \systemname suggests a set of 
-
-
-
-The core of \systemname is a knowledge-base of
-
-
-
-
-
-
-
-
-
-design and annotation of relational schemas.
-
-
-
-
-We use a case study to evaluate the feasibility of LOKI.
+In this paper, we detail on our initial efforts to prime the \systemname knowledge-base with existing governmental open-data.
 Specifically...
 
-
+\subsection{Notes}
 
 
 
