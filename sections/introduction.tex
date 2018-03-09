@@ -1,38 +1,36 @@
 % -*- root: ../paper.tex -*-
 
-It's a story as old as time: Student gathers data, makes a graph with the data, writes a paper about the data, and then graduates.  
-With the student gone, the data languishes.
-Without so much as a wiki page or README file documenting it, anyone who wants to re-use the data needs to spend hours, days, or even weeks reverse-engineering it.
-If we're lucky, that person documents their efforts.  
-If not, the entire process repeats.
+It's a story as old as time: A student gathers data, makes a graph with the data, writes a paper about the data.
+Then the student graduates and the data languishes, without so much as a wiki page or README file documenting it.
+The next student to use the data needs to spend hours, days, or even weeks reverse-engineering it.
+Then they also graduate and the whole process can start over again.
 
-To break this cycle of data abandonment, we propose \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
-Fundamentally, \systemname allows users to assemble schemas on-demand, both discovering and incrementally refining schema definitions in response to changing data needs.  
-To accomplish this, \systemname maintains a knowledge-base of both approximate, as well as exact schema labelings.
+As a way to break this tragic cycle of data abandonment, we propose \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
+\systemname allows users to assemble schemas on-demand, both (re-)discovering and incrementally refining schema definitions in response to changing data needs.  
+To accomplish this, \systemname is built around a knowledge-base of both approximate, as well as exact schema labelings.
 First, approximate labelings derived from existing open-data sets, user-feedback, and expert-provided heuristics, jump-start the labeling process.
 When a user first points \systemname at a new tabular data set, \systemname provides users with a preliminary, default schema.
-As users confirm and/or override parts of the proposed schema, \systemname registers the mappings for anyone who uses the same dataset in the future.
+As users confirm and/or override parts of the proposed schema, \systemname preserves the labels for the dataset's next user.
+
+
+
 
 In this paper, we detail on our initial efforts to prime the \systemname knowledge-base with existing governmental open-data.
 Specifically...
 
-\subsection{Notes}
+% One more thought regarding a pitch for the work.  We could wrap the idea in the context of a larger system for importing / querying initially unlabeled data.  Specifically, when someone first loads an unlabeled (or only partially labeled) CSV file into a database/spark, they have two problems:
 
+% 1) They need to label a subset of the columns that pertain to the specific analysis they want to do now.
+% 2) They don't need to label *all* of the columns (might be 10s, 100s, or 1000s of columns that they don't care about).  
 
+% However, at some point in the future, more labeling might be helpful.  For example:
+% 1) They pose a query and randomly discover that they are missing a column that *could* potentially exist in the source data.
+% 2) Someone else wants to use the same data set, but with a different selection of columns.
+% 3) The knowledge-base is updated and more automatic labelings become available.
 
-One more thought regarding a pitch for the work.  We could wrap the idea in the context of a larger system for importing / querying initially unlabeled data.  Specifically, when someone first loads an unlabeled (or only partially labeled) CSV file into a database/spark, they have two problems:
+% I'm going to suggest that we present our contribution in the context of a system that:
+% 1) Auto-suggests names for columns based on existing heuristics
+% 2) Saves labeling efforts, making it possible to incrementally label a data-set and re-use effort across analyses
+% 3) Allows you to ask whether a particular column name *could* exist in a given data set, and identify the data column that most-likely represents it.
 
-1) They need to label a subset of the columns that pertain to the specific analysis they want to do now.
-2) They don't need to label *all* of the columns (might be 10s, 100s, or 1000s of columns that they don't care about).  
-
-However, at some point in the future, more labeling might be helpful.  For example:
-1) They pose a query and randomly discover that they are missing a column that *could* potentially exist in the source data.
-2) Someone else wants to use the same data set, but with a different selection of columns.
-3) The knowledge-base is updated and more automatic labelings become available.
-
-I'm going to suggest that we present our contribution in the context of a system that:
-1) Auto-suggests names for columns based on existing heuristics
-2) Saves labeling efforts, making it possible to incrementally label a data-set and re-use effort across analyses
-3) Allows you to ask whether a particular column name *could* exist in a given data set, and identify the data column that most-likely represents it.
-
-Specifically, in this paper, we're conducting a case study evaluating one particular approach to task (1).  
+% Specifically, in this paper, we're conducting a case study evaluating one particular approach to task (1).  
