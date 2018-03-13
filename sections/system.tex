@@ -16,27 +16,44 @@ Once the user has labeled or discovered a sufficient set of columns, \systemname
 
 \subsection{Labeling and Discovery}
 
-\begin{itemize}
-  \item Declare notation: Set of columns, Rule for column labeling, etc...
-  \item Express the labeling problem in terms of this
-  \item Express the discovery problem in terms of this
-\end{itemize}
+We assume that data arrives in unlabeled tabular format.  
+An input table $T$ has $N$ columns and consists of a set of rows $t \in T$.
+Each row is an indexed list of attribute values $t = \tuple{t[1], \ldots, t[N]}$
+With $1 \leq A \leq N$ we write $T[A]$ to represent column $A$ of $T$, or the \emph{bag} of values located at that position in each row
+$T[A] = \bagcomprehension{t[A]}{t \in T}$.
+We define the domain of $A$ in $T$, $dom_T(A)$ to be the \emph{set} of such values (i.e., $set(T[A])$).  
+A \emph{schema} $S$ is a list of $N$ \emph{names}, or human interpretable strings $S[1], \ldots, S[N]$ identifying each attribute.
+Note that this definition differs slightly from the classical definition of schemas, which here do not restrict the domain of a given attribute.
+
+\systemname addresses two closely related problems that we term labeling and discovery.
+For both, we assume the existence of a utility function $u(T[A], S[A]) \in [0, 1]$ that ranks the quality of a name $S[A]$ for a given column\footnote{Other factors might also be considered for the utility function (e.g., the rest of the schema or other columns of the table).  We leave these considerations for future work.}.  
+We discuss several such utility functions in this paper.
+
+\tinysection{Labeling}
+In terms of this utility function, the goal of labeling is to take a table $T$ and infer a schema $S$ for it that maximizes total utility:
+$$\argmax_{S}\left(\sum_{1 \leq A \leq N}u(T[A], S[A])\right)$$ 
+optionally subject to the constraint that no two columns receive identical labels (i.e., for all $A \neq A'$, $S[A] \neq S[A']$).
+
+\tinysection{Discovery}
+We refer to the dual problem as discovery: Given a name $\sigma$, we would like to know which (if any) columns are valid candidates for $\sigma$:
+$$\argmax_{A}\left(\; u(T[A], \sigma)\;\right)$$
+optionally subject to a threshold value $0 \leq \delta \leq 1$ on the utility function.  We also consider the top-k variation of this problem, where we return the k columns with highest utility.
+
+\section{Other Concerns}
+In addition to the challenges of labeling and discovery, there are two additional challenges in implementing \systemname that, at present, we solve with off the shelf techniques.
+First, \systemname need a way to infer the type (e.g., Numeric, String, or Ordinal) of columns of ingested data.  
+For this, we adopt a simple counting-based technique~\cite{yang2015lenses}.
+We attempt to parse each value using an array of regular expressions, one for each registered type.
+A majority vote of successful parses in a column decides the column's type, with a threshold of 50\% indicating a string column and fewer than 100 distinct values indicating an ordinal.
+Admittedly, more advanced techniques that relate columns, for example using functional dependencies, are possible.
+However majority vote suffices for most use cases, and as such we leave more interesting type annotation schemes to future work.
+
+Second, \systemname needs to load data into the underlying system.  
+Again, we use each platform's native loading scheme: \texttt{DataFrameReader}s on Spark, and native \texttt{LOAD} commands on RDBMSes, with a fall-back to manual \texttt{INSERT} operations if necessary.
+As before, more intricate loading options have been explored by others~\cite{DBLP:conf/sigmod/AlagiannisBBIA12,DBLP:conf/cidr/IdreosKM07}, but are beyond the scope this paper.
 
 
-\subsection{Approximate Matching Rules}
-
-Outline approximate matching rules: Expert heuristics, rules, etc...
-\begin{itemize}
-  \item How are approximate KB entries encoded?
-  \item How do we unify different types of heuristics?
-\end{itemize}
 
 
-\subsection{Exact Matching Rules}
 
-Outline exact matching rules: Data identity, recording/querying feedback.  Merging conflicts.
 
-\begin{itemize}
-  \item How is feedback saved in the KB.
-  \item What happens in response to conflicting feedback.  
-\end{itemize}
