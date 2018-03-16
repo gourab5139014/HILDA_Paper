@@ -30,3 +30,4 @@ sample-*.pdf
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+/paper.pdf

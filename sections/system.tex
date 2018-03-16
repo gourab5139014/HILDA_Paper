@@ -39,7 +39,7 @@ We refer to the dual problem as discovery: Given a name $\sigma$, we would like 
 $$\argmax_{A}\left(\; u(T[A], \sigma)\;\right)$$
 optionally subject to a threshold value $0 \leq \delta \leq 1$ on the utility function.  We also consider the top-k variation of this problem, where we return the k columns with highest utility.
 
-\section{Other Concerns}
+\subsection{Other Concerns}
 In addition to the challenges of labeling and discovery, there are two additional challenges in implementing \systemname that, at present, we solve with off the shelf techniques.
 First, \systemname need a way to infer the type (e.g., Numeric, String, or Ordinal) of columns of ingested data.  
 For this, we adopt a simple counting-based technique~\cite{yang2015lenses}.
@@ -49,8 +49,8 @@ Admittedly, more advanced techniques that relate columns, for example using func
 However majority vote suffices for most use cases, and as such we leave more interesting type annotation schemes to future work.
 
 Second, \systemname needs to load data into the underlying system.  
-Again, we use each platform's native loading scheme: \texttt{DataFrameReader}s on Spark, and native \texttt{LOAD} commands on RDBMSes, with a fall-back to manual \texttt{INSERT} operations if necessary.
-As before, more intricate loading options have been explored by others~\cite{DBLP:conf/sigmod/AlagiannisBBIA12,DBLP:conf/cidr/IdreosKM07}, but are beyond the scope this paper.
+We use each platform's native loading scheme: \texttt{DataFrameReader}s on Spark, and native \texttt{LOAD} commands on RDBMSes, with a fall-back to manual \texttt{INSERT} operations if necessary.
+As before, more intricate loading options are possible~\cite{DBLP:conf/sigmod/AlagiannisBBIA12,DBLP:conf/cidr/IdreosKM07}, but are beyond the scope of this paper.
 
 
 
