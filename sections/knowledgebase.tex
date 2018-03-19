@@ -40,8 +40,17 @@ By far, the dominant type was numeric, so the preliminary efforts we outline in 
 We considered a range of options for modeling numeric data and settled on an approach based on numerical distributions.
 In comparison to more complex approaches like neural networks, this approach is simple, efficient, and well understood.
 Simply put, given a number of example column instances, we explore a range of numerical distributions and select the one with the best fit.
+Our preliminary implementation of \systemname explores three different distributions: Uniform, Normal, and \placeholder{Zipfian}.  
+Specifically, given a set of columns $T_\sigma[i]$ that exemplify the name $\sigma$, we find the shape parameters for three distributions that best fit
+$$D_{U} = \argmin_{l, h} $$
+
+
+
+As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.
+
+
 The resulting match-quality function is the probability of the column values being a representative sample drawn from this distribution.
-We capturethis probability with the \placeholder{K-L Divergence} between the distribution of the sampled values and the distribution modeling the name.
+We measure this probability by the \placeholder{K-L Divergence} between the distribution of the sampled values and the distribution modeling the name.
 
 
 \subsection{Expert Augmentation}
