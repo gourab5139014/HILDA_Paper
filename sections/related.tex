@@ -1,10 +1,20 @@
-\cite{nandi2013gestural} uses data similarity between two attributes for a join operation by counting the number of times each value from one attribute appears in the other and a histogram is constructed from the counts for all of the values.
+Data distributions have been used for similar purposes in other work.  
+For example GestureQuery~\cite{nandi2013gestural} uses data similarity between two attributes to select candidate attributes for an equi-join.  
+To maximize the join arity, the system counts the number of times each value from one attribute appears in the other and a histogram is constructed from the counts for all of the values.
 
-Wrangler \cite{kandel2011wrangler} infers the data type of a column and highlights errors based on inconsistent data types. Although wrangler creates a new column for extracted data as part of unfold operation, but does not infer the column name, analyst has to name the new column manually.
+Wrangler \cite{kandel2011wrangler} and Potter's wheel \cite{raman2001potter} detect data domains through inclusion functions (e.g. regular expressions).
+Wrangler in particular infers the data type of a column and highlights errors based on inconsistent data types. 
+Wrangler also has several operators like split and unfold that create new columns.
+The split operator decomposes composite data values into component distributions.  
+The unfold operator reverses a table pivot, collapsing data laid out as key-value pairs into columns.  
+A useful application of the \systemname knowledge-base that we hope to explore in future work is using it to detect opportunities for applying such operators.
 
-Potter's wheel \cite{raman2001potter} let's user define custom domains and uses inclusion function match to identify values in the domain.
 
-Unfold operation ”unflattens” tables; it takes two columns, collects rows that have the same values for all the other columns, and unfolds the two chosen columns. Values in one column are used as column names to align the values in the other column.
+
+% Although wrangler creates a new column for extracted data as part of unfold operation, but does not infer the column name, analyst has to name the new column manually.
+% Unfold operation ”unflattens” tables; it takes two columns, collects rows that have the same values for all the other columns, and unfolds the two chosen columns. Values in one column are used as column names to align the values in the other column.
+
+
 
 Yago \cite{fabian2007yago} provides a model which helps express entities, facts, relations between facts and properties of relations. This property could help list ontologies and find relation between columns.
 

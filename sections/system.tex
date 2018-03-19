@@ -36,7 +36,7 @@ optionally subject to the constraint that no two columns receive identical label
 
 \tinysection{Discovery}
 We refer to the dual problem as discovery: Given a name $\sigma$, we would like to know which (if any) columns are valid candidates for $\sigma$:
-$$\argmax_{A}\left(\; u(T[A], \sigma)\;\right)$$
+$$\argmax_{A}\big(\; u(T[A], \sigma)\;\big)$$
 optionally subject to a threshold value $0 \leq \delta \leq 1$ on the utility function.  We also consider the top-k variation of this problem, where we return the k columns with highest utility.
 
 \subsection{Other Concerns}
@@ -52,7 +52,9 @@ Second, \systemname needs to load data into the underlying system.
 We use each platform's native loading scheme: \texttt{DataFrameReader}s on Spark, and native \texttt{LOAD} commands on RDBMSes, with a fall-back to manual \texttt{INSERT} operations if necessary.
 As before, more intricate loading options are possible~\cite{DBLP:conf/sigmod/AlagiannisBBIA12,DBLP:conf/cidr/IdreosKM07}, but are beyond the scope of this paper.
 
+\tinysection{User Interface}
 
+\todo{Add some mockups of user interfaces for each of these}
 
 
 

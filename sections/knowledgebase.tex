@@ -1,11 +1,37 @@
 % -*- root: ../paper.tex -*-
 
+The core component of \systemname is a knowledge-base that is used to identify column names.
+In this section, we outline the key design challenges and capabilities of this knowledge-base.  
+We first outline the two types of information being stored: Heuristics and Feedback.
+Then we discuss both heuristics and feedback for one particular type of data: Numerical.  
+Finally, we discuss support for both labeling and discovery queries over over the knowledge-base.
 
+\subsection{Modeling Column Descriptions}
 
-\subsection{Types of Matching Rules}
+The \systemname knowledge-base is responsible for answering both labeling and discovery queries.
+As previously discussed, both types of queries can be expresed in terms of a utility function $u(T[A], S[A])$, a $[0,1]$-valued measure of the quality of a match between a column name and a collection of data values in the column.
+A utility of 0 indicates a non-match and a utility of 1 indicates a perfect match.  
+We first discuss how this utility function is realized in the \systemname knowledge-base.
 
-\tinysection{Approximate}
+\begin{figure}
+\placeholder{put bar-graph of types here}
+\caption{Breakdown of data types}
+\label{fig:type-breakdown}
+\end{figure}
 
+\tinysection{Heuristic Descriptions}
+Fundamentally, the \systemname utility function decides whether a given description of a column name (i.e., $S[A]$) aligns with the content of the column (i.e., $T[A]$).  
+The first challenge, then, is to precisely characterize how column names are described.
+Specific description techniques vary by data type, so our first step was to prioritize based on available data.
+We sampled a collection of \placeholder{\#\#\#} data sets from open data portals, as discussed later in Experiments (Section~\ref{sec:experiments}).
+We then categorized the \placeholder{\#\#\#} columns in our sample into three broad types: 
+(1) Numeric data, or any recods consisting of digits, at most a single decimal point, and an optional exponent; 
+(2) Enumerated types, based on an arbitrary threshold of 100 distinct values in the column; and 
+(3) Textual data, or anything else.  
+By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on describing numeric data.
+
+\subsection{Numeric Data}
+Focus on the challenges of sketching numeric types
 
 Outline approximate matching rules: Expert heuristics, rules, etc...
 \begin{itemize}
@@ -14,7 +40,7 @@ Outline approximate matching rules: Expert heuristics, rules, etc...
 \end{itemize}
 
 
-\tinysection{Exact}
+\tinysection{Feedback}
 
 Outline exact matching rules: Data identity, recording/querying feedback.  Merging conflicts.
 
@@ -24,17 +50,7 @@ Outline exact matching rules: Data identity, recording/querying feedback.  Mergi
 \end{itemize}
 
 
-\subsection{Data Sketching for Similarity}
-Overview sketching data for similarity.  
 
-Data type taxonomy
-\begin{itemize}
-  \item Numeric Data (Sketch = Distribution)
-  \item Textual Data (N-Gram distribution?, )
-  \item Enum Types (Overlap, Concept-Similarity)
-  \item ...?
-\end{itemize}
+\subsection{Labeling Queries}
 
-\subsection{Numeric Data}
-Focus on the challenges of sketching numeric types
-
+\subsection{Discovery Queries}

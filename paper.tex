@@ -1,6 +1,8 @@
 \documentclass[sigconf]{acmart}
 
 \usepackage{booktabs} % For formal tables
+\usepackage{todonotes}
+
 \input{preamble.tex}
 
 
@@ -22,14 +24,14 @@
 \acmISBN{123-4567-24-567/08/06}
 
 %Conference
-\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
-  Paso, Texas USA}
-\acmYear{1997}
-\copyrightyear{2016}
+\acmConference[HILDA]{Human-in-the-Loop Data Analytics}{June 2018}{Houston Texas}
+\acmYear{2018}
+\copyrightyear{2018}
 
 
 \acmArticle{4}
 \acmPrice{15.00}
+
 
 
 \newcommand{\systemname}{\textbf{LOKI}\xspace}
@@ -86,21 +88,27 @@
 \maketitle
 
 \section{Introduction}
+\label{sec:introduction}
 \input{sections/introduction.tex}
 
 \section{System Design}
+\label{sec:system}
 \input{sections/system.tex}
 
 \section{Knowledge-Base}
+\label{sec:knowledgebase}
 \input{sections/knowledgebase.tex}
 
 \section{Experiments}
+\label{sec:experiments}
 \input{sections/experiments.tex}
 
 \section{Related Work}
+\label{sec:related}
 \input{sections/related.tex} 
 
 \section{Future Work}
+\label{sec:future}
 \input{sections/future.tex}
 
 \bibliographystyle{ACM-Reference-Format}
