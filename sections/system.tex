@@ -27,10 +27,10 @@ Note that this definition differs slightly from the classical definition of sche
 
 \systemname addresses two closely related problems that we term labeling and discovery.
 For both, we assume the existence of a utility function $u(T[A], S[A]) \in [0, 1]$ that ranks the quality of a name $S[A]$ for a given column\footnote{Other factors might also be considered for the utility function (e.g., the rest of the schema or other columns of the table).  We leave these considerations for future work.}.  
-We discuss several such utility functions in this paper.
+Match-quality functions, discussed below, are one instance of this utility function.
 
 \tinysection{Labeling}
-In terms of this utility function, the goal of labeling is to take a table $T$ and infer a schema $S$ for it that maximizes total utility:
+In terms of the utility function, the goal of labeling is to take a table $T$ and infer a schema $S$ for it that maximizes total utility:
 $$\argmax_{S}\left(\sum_{1 \leq A \leq N}u(T[A], S[A])\right)$$ 
 optionally subject to the constraint that no two columns receive identical labels (i.e., for all $A \neq A'$, $S[A] \neq S[A']$).
 
