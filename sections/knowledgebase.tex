@@ -12,7 +12,7 @@ The \systemname knowledge-base is responsible for answering both labeling and di
 For both we want to define a $[0,1]$-valued measure that we call the \emph{match-quality}: the quality of a match between a column name and a collection of data values in the column.
 A match-quality of 0 indicates that the name is completely inappropriate for the column, while a match-quality of 1 indicates a perfect match.  
 The \systemname knowledge-base is responsible for associating column names with match-quality functions for computing the descriptiveness of the name on a given column.
-We will abuse syntax and use $\namesymbol$ to denote both the name, as well as the corresponding match-quality function ($\namesymbol(T[A]) \in [0,1]$) in the knowledge-base.
+We will abuse syntax and use $\namesymbol$ to denote both the name, as well as the corresponding match-quality function ($\namesymbol : dom_T(A) \rightarrow [0,1]$) in the knowledge-base.
 
 \begin{figure}
 \placeholder{put bar-graph of types here}
@@ -31,7 +31,7 @@ Learned heuristics serve as baseline match-quality functions by modeling typical
 Specific modeling techniques vary by data type, so our first step was to assess what types exist.
 We sampled a collection of \placeholder{\#\#\#} data sets from open data portals, as discussed later in Experiments (Section~\ref{sec:experiments}).
 We then categorized the \placeholder{\#\#\#} columns in our sample into three broad types: 
-(1) Numeric data, or any recods consisting of digits, at most a single decimal point, and an optional exponent; 
+(1) Numeric data, or any records consisting of digits, at most a single decimal point, and an optional exponent; 
 (2) Enumerated types, based on an arbitrary threshold of 100 distinct values in the column; and 
 (3) Textual data, or anything else.  
 By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on modeling numeric data.
@@ -51,26 +51,29 @@ We measure this probability by the \placeholder{RMS Error} between the distribut
 
 \subsection{Expert Augmentation}
 Learned heuristics in the \systemname knowledge-base provide a starting point for defining match-quality functions.
+To fine tune these match-quality functions, we provide support for augmenting matching-quality functions in the knowledge base with expert knowledge.
 
+\begin{figure}
+\begin{tabular}{r|l}
+\textbf{How Y modifies X} & $(\namesymbol_x \oplus \namesymbol_y)(T_A)$ \\\hline
+X Or Y & $max(\namesymbol_x(T_A), \namesymbol_y(T_A))$\\
+X And Y & $\namesymbol_x(T_A) \cdot \namesymbol_y(T_A)$\\
+X Unless Y & $min(\namesymbol_x(T_A), \namesymbol_y(T_A))$\\
+Y Instead of X & $\namesymbol_y(T_A)$\\
+Y Suggests X & $1-(1-\namesymbol_x(T_A))(1-\namesymbol_y(T_A))$
+\end{tabular}
+\caption{Example augmentation modifiers}
+\label{fig:modifiers}
+\end{figure}
 
+\tinysection{Modifiers}
+Expert knowledge in the knowledge-base is encoded in two parts: 
+(1) A quality-match function that provides a heuristic encoding of the expert knowledge, and 
+(2) An augmentation modifier that indicates how the new quality match function is to be combined with the existing one.  
+Figure~\ref{fig:modifiers} illustrates several example modifiers together with intuitive phrasings of each.  
+For example, if the expert heuristic defines an unrelated approach to matching columns, the highest match value is used.
 
-
- can be supplemented by expert 
-
-
-Verbs: is, must, must-not, could, could-not
-
-
-Focus on the challenges of sketching numeric types
-
-Outline approximate matching rules: Expert heuristics, rules, etc...
-\begin{itemize}
-  \item How are approximate KB entries encoded?
-  \item How do we unify different types of heuristics?
-\end{itemize}
-
-
-\tinysection{Feedback}
+\subsection{Feedback}
 
 Outline exact matching rules: Data identity, recording/querying feedback.  Merging conflicts.
 

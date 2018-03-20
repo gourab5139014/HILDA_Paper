@@ -19,24 +19,24 @@ Once the user has labeled or discovered a sufficient set of columns, \systemname
 We assume that data arrives in unlabeled tabular format.  
 An input table $T$ has $N$ columns and consists of a set of rows $t \in T$.
 Each row is an indexed list of attribute values $t = \tuple{t[1], \ldots, t[N]}$
-With $1 \leq A \leq N$ we write $T[A]$ to represent column $A$ of $T$, or the \emph{bag} of values located at that position in each row
-$T[A] = \bagcomprehension{t[A]}{t \in T}$.
-We define the domain of $A$ in $T$, $dom_T(A)$ to be the \emph{set} of such values (i.e., $set(T[A])$).  
+With $1 \leq A \leq N$ we write $T_A$ to represent column $A$ of $T$, or the \emph{bag} of values located at that position in each row
+$T_A = \bagcomprehension{t[A]}{t \in T}$.
+We define the domain of $A$ in $T$, $dom_T(A)$ to be the \emph{set} of such values (i.e., $set(T_A)$).  
 A \emph{schema} $S$ is a list of $N$ \emph{names}, or human interpretable strings $S[1], \ldots, S[N]$ identifying each attribute.
 Note that this definition differs slightly from the classical definition of schemas, which here do not restrict the domain of a given attribute.
 
 \systemname addresses two closely related problems that we term labeling and discovery.
-For both, we assume the existence of a utility function $u(T[A], S[A]) \in [0, 1]$ that ranks the quality of a name $S[A]$ for a given column\footnote{Other factors might also be considered for the utility function (e.g., the rest of the schema or other columns of the table).  We leave these considerations for future work.}.  
+For both, we assume the existence of a utility function $u(T_A, S[A]) \in [0, 1]$ that ranks the quality of a name $S[A]$ for a given column\footnote{Other factors might also be considered for the utility function (e.g., the rest of the schema or other columns of the table).  We leave these considerations for future work.}.  
 Match-quality functions, discussed below, are one instance of this utility function.
 
 \tinysection{Labeling}
 In terms of the utility function, the goal of labeling is to take a table $T$ and infer a schema $S$ for it that maximizes total utility:
-$$\argmax_{S}\left(\sum_{1 \leq A \leq N}u(T[A], S[A])\right)$$ 
+$$\argmax_{S}\left(\sum_{1 \leq A \leq N}u(T_A, S[A])\right)$$ 
 optionally subject to the constraint that no two columns receive identical labels (i.e., for all $A \neq A'$, $S[A] \neq S[A']$).
 
 \tinysection{Discovery}
 We refer to the dual problem as discovery: Given a name $\namesymbol$, we would like to know which (if any) columns are valid candidates for $\namesymbol$:
-$$\argmax_{A}\big(\; u(T[A], \namesymbol)\;\big)$$
+$$\argmax_{A}\big(\; u(T_A, \namesymbol)\;\big)$$
 optionally subject to a threshold value $0 \leq \delta \leq 1$ on the utility function.  We also consider the top-k variation of this problem, where we return the k columns with highest utility.
 
 \subsection{Other Concerns}
