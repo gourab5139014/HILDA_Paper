@@ -1,3 +1,5 @@
+% -*- root: ../paper.tex -*-
+
 Data distributions have been used for similar purposes in other work.  
 For example GestureQuery~\cite{nandi2013gestural} uses data similarity between two attributes to select candidate attributes for an equi-join.  
 To maximize the join arity, the system counts the number of times each value from one attribute appears in the other and a histogram is constructed from the counts for all of the values.
@@ -9,21 +11,18 @@ The split operator decomposes composite data values into component distributions
 The unfold operator reverses a table pivot, collapsing data laid out as key-value pairs into columns.  
 A useful application of the \systemname knowledge-base that we hope to explore in future work is using it to detect opportunities for applying such operators.
 
-
-
 % Although wrangler creates a new column for extracted data as part of unfold operation, but does not infer the column name, analyst has to name the new column manually.
 % Unfold operation ”unflattens” tables; it takes two columns, collects rows that have the same values for all the other columns, and unfolds the two chosen columns. Values in one column are used as column names to align the values in the other column.
 
+An orthogonal approach to modeling and matching columns is to use ontologies, which express entities, facts, relations between facts and properties of relations
+Ontologies like Yago \cite{fabian2007yago} could be used to identify semantic properties that relate columns.
 
+A data summary called the data describer is used in \cite{ping2017datasynthesizer}. The data types, correlations and distributions of the attributes in a private dataset are listed. Each attribute is categorized into either numerical or non-numerical. If non-numerical attribute cannot be parsed as datetime then it is considered to be a string.
+\todo{What exactly is the purpose of the data describer.  How is it used?  How do its goals differ from ours, and what are the implications on its design?} 
 
-Yago \cite{fabian2007yago} provides a model which helps express entities, facts, relations between facts and properties of relations. This property could help list ontologies and find relation between columns.
-
-A data summary called the data describer is used in \cite{ping2017datasynthesizer}. The data types, correlations and distributions of the attributes in a private dataset are listed. Each attributei s categorized into either numerical or non-numerical. If non-numerical attribute cannot be parsed as datetime then it is considered to be a string. 
-
-In order to understand the layout and meaning of data, PADS \cite{fisher2005pads} explores data and accumulators track
-the number of good values, the number of bad values, and the distribution
-of legal values. Typical questions answered through this approach include: how complete is the description of the syntax of the data source, how many different representations for “data not available” are there, what is the distribution of values for particular fields, etc.
-
+PADS \cite{fisher2005pads} helps users to understand the layout and meaning of data by designing syntactic descriptions of the data.
+Based on the syntax, accumulators track the number of good values, the number of bad values, and the distribution of legal values.
+This technique could be used in \systemname to help capture expert knowledge.
 
 There is an increasing number of datasets in which well-structured attributes
 (with or without a name) can be identified, each containing a set of values called a domain. There is lack of schema description in most of the datasets.

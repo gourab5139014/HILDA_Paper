@@ -35,8 +35,8 @@ $$\argmax_{S}\left(\sum_{1 \leq A \leq N}u(T[A], S[A])\right)$$
 optionally subject to the constraint that no two columns receive identical labels (i.e., for all $A \neq A'$, $S[A] \neq S[A']$).
 
 \tinysection{Discovery}
-We refer to the dual problem as discovery: Given a name $\sigma$, we would like to know which (if any) columns are valid candidates for $\sigma$:
-$$\argmax_{A}\big(\; u(T[A], \sigma)\;\big)$$
+We refer to the dual problem as discovery: Given a name $\namesymbol$, we would like to know which (if any) columns are valid candidates for $\namesymbol$:
+$$\argmax_{A}\big(\; u(T[A], \namesymbol)\;\big)$$
 optionally subject to a threshold value $0 \leq \delta \leq 1$ on the utility function.  We also consider the top-k variation of this problem, where we return the k columns with highest utility.
 
 \subsection{Other Concerns}

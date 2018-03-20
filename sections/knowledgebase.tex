@@ -12,7 +12,7 @@ The \systemname knowledge-base is responsible for answering both labeling and di
 For both we want to define a $[0,1]$-valued measure that we call the \emph{match-quality}: the quality of a match between a column name and a collection of data values in the column.
 A match-quality of 0 indicates that the name is completely inappropriate for the column, while a match-quality of 1 indicates a perfect match.  
 The \systemname knowledge-base is responsible for associating column names with match-quality functions for computing the descriptiveness of the name on a given column.
-We will abuse syntax and use $\sigma$ to denote both the name, as well as the corresponding match-quality function ($\sigma(T[A]) \in [0,1]$) in the knowledge-base.
+We will abuse syntax and use $\namesymbol$ to denote both the name, as well as the corresponding match-quality function ($\namesymbol(T[A]) \in [0,1]$) in the knowledge-base.
 
 \begin{figure}
 \placeholder{put bar-graph of types here}
@@ -36,24 +36,27 @@ We then categorized the \placeholder{\#\#\#} columns in our sample into three br
 (3) Textual data, or anything else.  
 By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on modeling numeric data.
 
-\subsection{Numeric Data}
+\tinysection{Numeric Data}
 We considered a range of options for modeling numeric data and settled on an approach based on numerical distributions.
 In comparison to more complex approaches like neural networks, this approach is simple, efficient, and well understood.
 Simply put, given a number of example column instances, we explore a range of numerical distributions and select the one with the best fit.
-Our preliminary implementation of \systemname explores three different distributions: Uniform, Normal, and \placeholder{Zipfian}.  
-Specifically, given a set of columns $T_\sigma[i]$ that exemplify the name $\sigma$, we find the shape parameters for three distributions that best fit
-$$D_{U} = \argmin_{l, h} $$
-
-
-
-As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.
-
+Our preliminary implementation of \systemname explores three different distributions: Uniform, Normal, and \placeholder{Zipfian}\footnote{As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.}.  
+For each distribution, we find the parameters ($\ell,h,\mu,\sigma,a$) that minimize the root-mean-squared (RMS) error between the predicted and observed frequencies. 
+\todo{Gourab, please sanity check the above.  Are we doing anything like binning to smooth out the curve?}
+$$\mathbb U(\ell, h)\;\;\;\;\;\mathbb N(\mu, \sigma)\;\;\;\;\;\mathbb Z(a)$$
+We then select the one model with the lowest overall RMS error.
 
 The resulting match-quality function is the probability of the column values being a representative sample drawn from this distribution.
-We measure this probability by the \placeholder{K-L Divergence} between the distribution of the sampled values and the distribution modeling the name.
-
+We measure this probability by the \placeholder{RMS Error} between the distribution of the sampled values and the distribution modeling the name.
 
 \subsection{Expert Augmentation}
+Learned heuristics in the \systemname knowledge-base provide a starting point for defining match-quality functions.
+
+
+
+
+ can be supplemented by expert 
+
 
 Verbs: is, must, must-not, could, could-not
 
