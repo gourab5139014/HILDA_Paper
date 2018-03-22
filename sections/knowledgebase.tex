@@ -42,7 +42,7 @@ In comparison to more complex approaches like neural networks, this approach is 
 Simply put, given a number of example column instances, we explore a range of numerical distributions and select the one with the best fit.
 Our preliminary implementation of \systemname explores three different distributions: Uniform, Normal, and \placeholder{Zipfian}\footnote{As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.}.  
 For each distribution, we find the parameters ($\ell,h,\mu,\sigma,a$) that minimize the root-mean-squared (RMS) error between the predicted and observed frequencies. 
-\todo{Gourab, please sanity check the above.  Are we doing anything like binning to smooth out the curve?}
+\todo{Gourab: We are binning only for distribution fitting, no smoothing}
 $$\mathbb U(\ell, h)\;\;\;\;\;\mathbb N(\mu, \sigma)\;\;\;\;\;\mathbb Z(a)$$
 We then select the one model with the lowest overall RMS error.
 
