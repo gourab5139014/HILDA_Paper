@@ -8,3 +8,29 @@ The central elements of this interface are
 (1) Visualizing the current quality of the knowledge base;
 (2) Identifying problem name/match-quality function pairs;
 (3) Refining records in the knowledge base by removing or merging existing data, or adding expert knowledge.
+
+
+\begin{figure}
+\begin{tabular}{r|l}
+\textbf{How Y modifies X} & $(\namesymbol_x \oplus \namesymbol_y)(T_A)$ \\\hline
+X Or Y & $max(\namesymbol_x(T_A), \namesymbol_y(T_A))$\\
+X And Y & $\namesymbol_x(T_A) \cdot \namesymbol_y(T_A)$\\
+X Unless Y & $min(\namesymbol_x(T_A), \namesymbol_y(T_A))$\\
+Y Instead of X & $\namesymbol_y(T_A)$\\
+Y Suggests X & $1-(1-\namesymbol_x(T_A))(1-\namesymbol_y(T_A))$
+\end{tabular}
+\caption{Example augmentation modifiers}
+\label{fig:modifiers}
+\end{figure}
+
+\tinysection{Modifiers}
+Expert knowledge in the knowledge-base is encoded in two parts: 
+(1) A quality-match function that provides a heuristic encoding of the expert knowledge, and 
+(2) An augmentation modifier that indicates how the new quality match function is to be combined with the existing one.  
+Figure~\ref{fig:modifiers} illustrates several example modifiers together with intuitive phrasings of each.  
+For example, if the expert heuristic defines an unrelated approach to matching columns, the highest match value is used.
+
+
+\subsection{Common Refinement Challenges}
+
+\subsubsection{Challenge 1: ...}

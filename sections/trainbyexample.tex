@@ -1,0 +1,29 @@
+
+To instantiate specific match-quality functions, we merge three sources of information: Learned Heuristics, Expert Augmentations, and User Feedback. 
+The first category, learned heuristics, models the content and distribution of typical instances of columns with a similar name.
+This distribution serves as a baseline match-quality function.
+The second category, expert augmentations, modifies the first, increasing or decreasing values based on expert-provided descriptions of what should and should not appear in columns with this name.
+The final category, user feedback, provides users with a way to confirm or override automated system choices, while also preserving these associations for future use.
+
+\subsection{Learned Heuristics}
+Learned heuristics serve as baseline match-quality functions by modeling typical instances of columns.
+Specific modeling techniques vary by data type, so our first step was to assess what types exist.
+We sampled a collection of \placeholder{\#\#\#} data sets from open data portals, as discussed later in Experiments (Section~\ref{sec:experiments}).
+We then categorized the \placeholder{\#\#\#} columns in our sample into three broad types: 
+(1) Numeric data, or any records consisting of digits, at most a single decimal point, and an optional exponent; 
+(2) Enumerated types, based on an arbitrary threshold of 100 distinct values in the column; and 
+(3) Textual data, or anything else.  
+By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on modeling numeric data.
+
+\tinysection{Numeric Data}
+We considered a range of options for modeling numeric data and settled on an approach based on numerical distributions.
+In comparison to more complex approaches like neural networks, this approach is simple, efficient, and well understood.
+Simply put, given a number of example column instances, we explore a range of numerical distributions and select the one with the best fit.
+Our preliminary implementation of \systemname explores three different distributions: Uniform, Normal, and \placeholder{Zipfian}\footnote{As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.}.  
+For each distribution, we find the parameters ($\ell,h,\mu,\sigma,a$) that minimize the root-mean-squared (RMS) error between the predicted and observed frequencies. 
+\todo{Gourab: We are binning only for distribution fitting, no smoothing}
+$$\mathbb U(\ell, h)\;\;\;\;\;\mathbb N(\mu, \sigma)\;\;\;\;\;\mathbb Z(a)$$
+We then select the one model with the lowest overall RMS error.
+
+The resulting match-quality function is the probability of the column values being a representative sample drawn from this distribution.
+We measure this probability by the \placeholder{RMS Error} between the distribution of the sampled values and the distribution modeling the name.
