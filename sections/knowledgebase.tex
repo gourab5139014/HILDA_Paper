@@ -24,6 +24,7 @@ An example is shown in Figure~\ref{fig:bipartitekb}.
 A matcher is any function $M : T[A] \rightarrow [0,1]$ which assigns any column of data to a $[0,1]$-valued measure that we call the matcher's \emph{score} for the column.  
 Concepts correspond to names.
 However, because the same name may be used in different contexts, multiple concepts can use the same column name.
+Similarly, a single concept may be identified by multiple synonymous names, so a single concept may be associated with multiple names.
 An edge between a matcher and a concept indicates candidacy:
 For a given column ranked highly by a matcher, any concept linked to the matcher by an edge is a viable name for the column.
 Each matcher has a \emph{default} edge, indicated in Figure~\ref{fig:bipartitekb} in bold.
@@ -34,7 +35,7 @@ The value $\mathbf D$ identifies the default edge.
 We require that each matcher have exactly one default edge.
 $$\forall M \in \mathbb M \;\;\; \exists C \in \mathbb C\;\;\; \mathbb E(M, C) = \mathbf D$$
 $$\forall M \in \mathbb M, C_1 \in \mathbb C \;\;\; \not\exists C_2 \neq C_1 \in \mathbb C \;\;\; \mathbb E(M, C_1) = \mathbb E(M, C_2) = \mathbf D$$
-We denote by $\mathbb D(M)$ the concept connected to $M$ by default edge, and by $\textbf{name}(C)$ the name associated with a concept.
+We denote by $\mathbb D(M)$ the concept connected to $M$ by default edge, and by $\textbf{name}(C)$ the set of (synonymous) names associated with a concept.
 
 
 
@@ -66,6 +67,6 @@ The concepts in the result are given by the resulting matcher's default edges $C
 The input to a labeling query is a name $\nu$, a set of columns $T_C = \{A_1, \ldots, A_N\}$, and the knowledge-base $\tuple{\mathbb M, \mathbb C, \mathbb E}$. 
 The goal of the query is to identify the position of the attribute $i \in [0,N]$ most likely to fit the column name.
 The set of matchers that can be used to identify this column are given by:
-$$\textbf{candidates}_\nu = \comprehension{M}{E(M, C) \neq \bot \wedge \textbf{name}(C) = \nu}$$
+$$\textbf{candidates}_\nu = \comprehension{M}{E(M, C) \neq \bot \wedge \nu \in \textbf{name}(C)}$$
 The answer to the discovery query then is given by
 $$\argmax_{i \in [0,N]} \left( \max_{M \in \textbf{candidates}_\nu} M(A_i)\right)$$
