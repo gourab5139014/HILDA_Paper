@@ -39,6 +39,15 @@ The lower-right, shown in yellow identifies potentially similar concepts that ha
 \tinysection{Concept Pair View}
 When a regions is selected in the explorer with a simple marquee tool, all pairs of concepts in the region are displayed to the user, along with their corresponding matchers.
 \todo{mockup of the pair view}
+A simple click on the scatter plot displays concept to the user, along with their corresponding matchers. User can analyze points in a dense area by using the zoom tool and then clicking on the point to get details.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\columnwidth]{graphics/Pair_view}
+	\caption{Pair view in scatter plot}
+	\label{fig:Pair view}
+\end{figure}
 
 
 % \begin{figure}
@@ -64,7 +73,7 @@ When a regions is selected in the explorer with a simple marquee tool, all pairs
 
 \subsection{Understanding Refinement in Practice}
 As experts identify errors or redundancies in the knowledge-base, they will need to patch the knowledge-base accordingly.
-To better understand their needs in this process, we selected 179 \todo{that's an awfully specific number... why that?} concept pairs at random from among the potential false-positives and potential false-negatives.
+To better understand their needs in this process, we selected 200 \todo{that's an awfully specific number... why that?} concept pairs at random from among the potential false-positives and potential false-negatives.
 We inspected each pair of concepts selected in this way and determined a root cause for each.
 These root causes could each be described by one of six categories, summarized in Figure~\ref{fig:datatags:lowerright}.
 We now discuss these categories in detail.
@@ -80,7 +89,7 @@ We now discuss these categories in detail.
 \subsubsection{Need better model for training on examples}
 For 4 pairs, the best fit matchers did not adequately describe the data distribution.
 The training phase categorizes data by either uniform or normal distributions. 
-However, we encountered several distributions better characterized through a more diverse range of data distributions.
+However, we encountered distributions which can be described better using other distributions like zipfian or lognormal rather than normal or uniform.
 \todo{The following sentence doesn't seem to be saying anything.  What was the outcome of the analysis?  Why is this a good example?  What's the takeaway?}
 We analyzed the CDF(figure~\ref{fig:Distribution 1} and figure~\ref{fig:Distribution 2}) of data distribution for each column from the points identified from quadrant one and four of the scatter plot. 
 
