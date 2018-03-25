@@ -87,10 +87,15 @@ We now discuss these categories in detail.
 \end{figure}
 \todo{Font size on the figure!!}
 
-\todo{Poonam: add graph for upper left quadrant}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\columnwidth]{graphics/Upper_left_quad}
+	\caption{Data tagging for points in upper left quadrant}
+	\label{fig:datatags:upperleft}
+\end{figure}
 
 \subsubsection{Need better model for training on examples}
-For 9 pairs in the lower right quadrant and \todo{Poonam:add number} pairs in the upper left quadrant, the best fit matchers did not adequately describe the data distribution.
+For 9 pairs in the lower right quadrant and 69 pairs in the upper left quadrant, the best fit matchers did not adequately describe the data distribution.
 The training phase categorizes data by either uniform or normal distributions. 
 However, we encountered distributions which can be described better using other distributions like zipfian or lognormal rather than normal or uniform.
 \todo{The following sentence doesn't seem to be saying anything.  What was the outcome of the analysis?  Why is this a good example?  What's the takeaway?}
@@ -144,7 +149,7 @@ Column WTFL\_AVG from biodiversity\_SW\_NHDPv2 and WET\_AG from Wet550\_2017 are
 \textbf{Resolution}: Use different string comparison function and compare the results.
 
 \subsubsection{Columns with similar distributions but different names}
-Out of 120 points analyzed from the upper left quadrant, \todo{Poonam:add number} had similar distributions as seen in~\ref{fig:Distribution 3} and~\ref{fig:Distribution 4} although the column names were different.
+Out of 120 points analyzed from the upper left quadrant, 51 had similar distributions as seen in~\ref{fig:Distribution 3} and~\ref{fig:Distribution 4} although the column names were different.
 
 \textbf{Resolution}: The distributions were described as either uniform or normal, we can use other distributions (zipfian, lognorm) and compare the results. If the results are similar, then these columns can be deleted from the knowledge base.
 
