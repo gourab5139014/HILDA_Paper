@@ -31,7 +31,12 @@ Our preliminary implementation of \systemname explores three different distribut
 	\trimfigurespacing
 \end{figure}
 
-%\footnote{As we show in the experiments section, these three distributions are sufficient to describe the vast majority of data in our sample set.}.  
+We used Kullback–Leibler (KL) divergence to measure how one distribution diverges from from another. A KL divergence of 0 suggess that distributions could be similar, if not the same. A KL divergence of 1 suggests that two distributions are very different. If knowledge of a specific problem domain suggests that similarity of data distributions could be better represented by another measure, KL divergence can be easily swapped with for it in our system.  
+
+Lexicographical Distance indicates the different in the column labels of two distributions. We used two measures of Lexicographical Distance - Levenstein Distance and NGram Distance. Section~\ref{sec:expertui} talks about performance of both of the measures in estimating Lexicographical Distance on our dataset. A Lexicographical Distance value of 0 suggest that the two columns labels are exactly the same, whereas, a value of 1 suggests that the column labels are very different.
+
+Learned heuristics require an assumption to build baseline match-quality functions. We proceed with the initial assumption that column pairs with \textit{similar} data would be labelled \textit{similarly}. The value of KL divergence of two columns is inversely proportional to \textit{similarity} of their data distributions. The value of Lexicographical distance of two columns is inversely proportional to \textit{similarity} of their column labels. We have verified this assumption by plotting the Cummulative Distribution Function of Lexicographical Distance with with minimum KL Divergence in Figure~\ref{fig:cdflexdist}. 80\% of column pairs with most similar data have their labels which are only 0.129 of less lexical distance apart. This indicates that columns pairs with the most similar data are indeed labelled similarly. 
+ 
 For each distribution, we find the parameters ($\ell,h,\mu,\sigma,a$) that minimize the root-mean-squared (RMS) error between the theoritical and empirical distributions. 
 
 $$\mathbb U(\ell, h)\;\;\;\;\;\mathbb N(\mu, \sigma)\;\;\;\;\;\mathbb Lognorm(\mu{*},\sigma{*})$$
