@@ -6,6 +6,7 @@
 \caption{System Overview}
 \label{fig:overview}
 \trimfigurespacing
+\vspace*{-1mm}
 \end{figure}
 
 The overall goal of \systemname is to streamline the process of developing schemas for existing unlabeled or poorly labeled data sets.  
@@ -34,7 +35,7 @@ A \textbf{Discovery} query addresses the dual problem: finding the attribute $A_
 
 \subsection{Other Implementation Concerns}
 In order to load data into a relational database management system, \systemname needs a way to infer the type (e.g., Numeric, String, or Ordinal) of columns of ingested data.  
-For this, we adopt a simple counting-based technique~\cite{yang2015lenses}.
+For this, we adopt a simple counting-based technique~\cite{yang2015lenses}:
 We attempt to parse each value using an array of regular expressions, one for each registered type.
 A majority vote of successful parses in a column decides the column's type, with a threshold of 50\% indicating a string column and fewer than 100 distinct values indicating an ordinal.
 Admittedly, more advanced techniques that relate columns, for example using functional dependencies, are possible.

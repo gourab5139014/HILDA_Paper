@@ -1,3 +1,4 @@
+% -*- root: ../paper.tex -*-
 
 To instantiate specific match-quality functions, we merge three sources of information: Learned Heuristics, Expert Augmentations, and User Feedback. 
 The first category, learned heuristics, models the content and distribution of typical instances of columns with a similar name.
@@ -25,8 +26,8 @@ Our preliminary implementation of \systemname explores three different distribut
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth]{graphics/CDF_LexDistance}
-	\caption{Cummulative Distribution Function of Lexicographical Distance of column pairs with minimum KL Divergence. Most of the matched column pairs (80\%) by similarity in data distributions have similar labels (less than 0.129 lexicographical distance apart)}
+	\includegraphics[trim={0 6mm 0 0},clip,width=1\columnwidth]{graphics/CDF_LexDistance}
+	\caption{CDF of Lexicographical Distance for the best match for each column.}
 	\label{fig:cdflexdist}
 	\trimfigurespacing
 \end{figure}
