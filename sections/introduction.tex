@@ -5,20 +5,17 @@ Then the student graduates and the data languishes, without so much as a wiki pa
 The next student to use the data needs to spend hours, days, or even weeks reverse-engineering it.
 Then they also graduate and the whole process can start over again.
 
-As a way to break this tragic cycle of data abandonment, we propose \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
-\systemname allows users to assemble schemas on-demand, both (re-)discovering and incrementally refining schema definitions in response to changing data needs.  
-To accomplish this, \systemname is built around a knowledge-base of both approximate, as well as exact schema labelings.
-First, approximate labelings derived from existing open-data sets, user-feedback, and expert-provided heuristics, jump-start the labeling process.
-When a user first points \systemname at a new tabular data set, \systemname provides users with a preliminary, default schema.
-As users confirm and/or override parts of the proposed schema, \systemname preserves the labels for the dataset's next user.
+This tragic cycle of data abandonment must be broken.
+We propose to end the suffering with \emph{Label Once, and Keep It} (\systemname), a data-ingest middleware for incremental, re-usable schema recovery.
+When a user first points \systemname at a new tabular data set, \systemname proposes a schema for it.
+It then collects feedback, both learning and also preserving schema metadata for later use.
+In short, \systemname will allow users to assemble schemas on-demand, both (re-)discovering and incrementally refining schema definitions in response to changing data needs.
+However, to accomplish this, we first need a knowledge-base of heuristics, domain knowledge, and dirty tricks.
 
-The effectiveness of \systemname depends primarily on the quality of its knowledge-base.  
-Hence, a properly populated konwledge-base is of paramount importance.
-In this paper, we introduce the \systemname editor, a tool being developed as part of \systemname for exactly this purpose.
+In this paper, we outline an interactive editor that we are designing as part of \systemname to facilitate the construction of such a knowledge-base
 The \systemname editor allows knowledge to be incorporated into the knowledge-base in two ways: (1) By learning from example data (e.g., drawn from open data portals), and (2) By manual adjustment from domain experts.
-In particular, we focus on the challenge of manual refinement of knowledge learned from example data.
-The editor is designed to help experts to quickly identify and resolve errors and ambiguity in the \systemname knowledge-base.
-
+In particular, we focus on our preliminary work to streamline manual refinement of knowledge learned from one type of example data.
+We show how, the editor can be used to help experts to quickly identify and resolve errors and ambiguity in the \systemname knowledge-base.
 Concretely, the contributions of this paper include:
 \begin{enumerate*}
   \item We introduce \systemname in Section~\ref{sec:system} and detail the structure of its knowledge-base in Section~\ref{sec:knowledgebase}
