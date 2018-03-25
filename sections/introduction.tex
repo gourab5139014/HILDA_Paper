@@ -12,15 +12,24 @@ It then collects feedback, both learning and also preserving schema metadata for
 In short, \systemname will allow users to assemble schemas on-demand, both (re-)discovering and incrementally refining schema definitions in response to changing data needs.
 However, to accomplish this, we first need a knowledge-base of heuristics, domain knowledge, and dirty tricks.
 
-In this paper, we outline an interactive editor that we are designing as part of \systemname to facilitate the construction of such a knowledge-base
-The \systemname editor allows knowledge to be incorporated into the knowledge-base in two ways: (1) By learning from example data (e.g., drawn from open data portals), and (2) By manual adjustment from domain experts.
+In principle, we might implement such a knowledge base as a neural network, train it on example data, and use it to suggest schemas.
+However, this approach suffers from a host of limitations:
+\begin{enumerate*}
+\item \textbf{Lack of generality}: A neural network tuned for use with one type of training data may need to be retuned for other scenarios.
+\item \textbf{Lack of extensibility}: Adding new training data or knowledge requires retraining from scratch.
+\item \textbf{Lack of transparency}: If the network misclassifies a column name, it can be hard to debug and refine the result.
+\end{enumerate*}
+Instead, we opt for an interactive approach.  We present the \systemname knowledge-base, a flexible, extensible infrastructure for collecting schema-naming heuristics.  
+We show how simple, efficient off-the-shelf techniques can be used to quickly prime the knowledge-base using example data.
+Then, we introduce an interactive editor that we are designing as part of \systemname to allow domain experts to refine the knowledge-base.
 In particular, we focus on our preliminary work to streamline manual refinement of knowledge learned from one type of example data.
 We show how, the editor can be used to help experts to quickly identify and resolve errors and ambiguity in the \systemname knowledge-base.
+
 Concretely, the contributions of this paper include:
 \begin{enumerate*}
-  \item We introduce \systemname in Section~\ref{sec:system} and detail the structure of its knowledge-base in Section~\ref{sec:knowledgebase}
+  \item We introduce \systemname in Section~\ref{sec:system} and detail the structure of its knowledge-base in Section~\ref{sec:knowledgebase}.
   \item We illustrate how the \systemname editor pre-populates the knowledge-base by learning from example data in Section~\ref{sec:trainbyexample}.
-  \item We identify specific errors that arise in the training process and show how the \systemname editor facilitates efficient detection and manual repair of the error.
+  \item We identify specific errors that arise in the training process and show how the \systemname editor facilitates efficient detection and manual repair of the error in Section~\ref{sec:expertui}.
 \end{enumerate*}
 
 % One more thought regarding a pitch for the work.  We could wrap the idea in the context of a larger system for importing / querying initially unlabeled data.  Specifically, when someone first loads an unlabeled (or only partially labeled) CSV file into a database/spark, they have two problems:

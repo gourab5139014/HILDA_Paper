@@ -38,16 +38,15 @@ The upper-left, shown in blue identifies distinct concepts with similar matchers
 The lower-right, shown in yellow identifies potentially similar concepts that have different matchers (potential false negatives).
 
 \tinysection{Concept Pair View}
-When a regions is selected in the explorer with a simple marquee tool, all pairs of concepts in the region are displayed to the user, along with their corresponding matchers.
-\todo{mockup of the pair view}
-A simple click on the scatter plot displays concept to the user, along with their corresponding matchers. User can analyze points in a dense area by using the zoom tool and then clicking on the point to get details.
+To resolve potential conflicts displayed in the explorer, users can select regions with a simple marquee tool or click on individual concepts (zoom is available if desired).
+The selected concepts are displayed, along with their corresponding matchers as illustrated in Figure~\ref{fig:pairview}.
 
-
-\begin{figure}[H]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Pair_view}
+	\includegraphics[trim={0 0 0 15mm},clip,width=\columnwidth]{graphics/Pair_view}
 	\caption{Pair view in scatter plot}
-	\label{fig:Pair view}
+	\label{fig:pairview}
+	\trimfigurespacing
 \end{figure}
 
 
@@ -74,105 +73,162 @@ A simple click on the scatter plot displays concept to the user, along with thei
 
 \subsection{Understanding Refinement in Practice}
 As experts identify errors or redundancies in the knowledge-base, they will need to patch the knowledge-base accordingly.
-To better understand their needs in this process, we selected 200 \todo{that's an awfully specific number... why that?} concept pairs at random from among the potential false-positives and potential false-negatives.
+To better understand their needs during this process, we selected 200 concept pairs at random from among the potential false-positives and potential false-negatives.
 We inspected each pair of concepts selected in this way and determined a root cause for each.
-These root causes could each be described by one of six categories, summarized in Figure~\ref{fig:datatags:lowerright}.
-We now discuss these categories in detail.
+We then grouped these root causes into seven categories.
+The distributions of root causes of the potential false negatives and false positives are shown in Figures~\ref{fig:datatags:lowerright} and \ref{fig:datatags:upperleft}, respectively.
+We now discuss each category in detail, along with an assessment of remedial actions available for resolving the potential error.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Lower_right_quad}
-	\caption{Data tagging for points in lower right quadrant}
+	\includegraphics[width=\columnwidth]{graphics/Lower_right_quad}
+	\caption{Root causes of potential false negatives.}
 	\label{fig:datatags:lowerright}
+	\trimfigurespacing
 \end{figure}
-\todo{Font size on the figure!!}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Upper_left_quad}
-	\caption{Data tagging for points in upper left quadrant}
+	\includegraphics[width=\columnwidth]{graphics/Upper_left_quad}
+	\caption{Root causes of potential false positives.}
 	\label{fig:datatags:upperleft}
+	\trimfigurespacing
 \end{figure}
 
-\subsubsection{Need better model for training on examples}
+\smallskip
+\subsubsection{Need a better model for training on examples}~\\
 For 9 pairs in the lower right quadrant and 69 pairs in the upper left quadrant, the best fit matchers did not adequately describe the data distribution.
 The training phase categorizes data by either uniform or normal distributions. 
 However, we encountered distributions which can be described better using other distributions like zipfian or lognormal rather than normal or uniform.
-\todo{The following sentence doesn't seem to be saying anything.  What was the outcome of the analysis?  Why is this a good example?  What's the takeaway?}
-We analyzed the CDF(figure~\ref{fig:Distribution 1} and figure~\ref{fig:Distribution 2}) of data distribution for each column from the points identified from quadrant one and four of the scatter plot. 
+Two examples are shown in Figure~\ref{fig:baddistributions}, following bimodal and zipfian distributions respectively, neither of which our preliminary implementation supported.
 
 \textbf{Resolution}: Although a more robust learning process might address this issue (e.g., by supporting more standard distributions like lognormal or zipfian), the only way to truly address this issue definitively is to allow experts to manually define custom distributions (e.g., using splines).
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Challenge1_1}
-	\caption{CDF of data distribution of column BIGGA\_AVG}
-	\label{fig:Distribution 1}
+	\begin{subfigure}{0.49\columnwidth}
+		\includegraphics[width=1.1\textwidth]{graphics/Challenge1_1}
+		\caption{\texttt{BIGGA\_AVG} (bimodal)}
+		\label{fig:Distribution1}
+	\end{subfigure}
+	\begin{subfigure}{0.49\columnwidth}
+		\includegraphics[width=1.1\textwidth]{graphics/Challenge7_1}
+		\caption{\texttt{PctPasture\_slope9} (zipfian)}
+		\label{fig:Distribution3}
+	\end{subfigure}
+	\trimfigurespacing
+	\caption{Example CDFs of poorly fitted matchers}
+	\label{fig:baddistributions}
+	\trimfigurespacing
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Challenge1_2}
-	\caption{CDF of data distribution of column BIGGA\_AVG\_I}
-	\label{fig:Distribution 2}
-\end{figure}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=0.8\columnwidth]{graphics/Challenge1_2}
+% 	\caption{CDF of data distribution of column BIGGA\_AVG\_I}
+% 	\label{fig:Distribution 2}
+% \end{figure}
 
-\subsubsection{Same column name in a different context}
+\smallskip
+\subsubsection{Same column name in a different context}~\\
 33 points, nearly half of the points sampled from among the potential false negatives, used the same name, but in different context.
 For example, among the datasets used for this case study, we had two similar datasets in biodiversity domain. 
 Both datasets consisted of data about flora and fauna, but from two different regions.
 
-\textbf{Resolution}: Given the nature of the context, a domain expert may wish to unify both concepts or keep them separate.
+\textbf{Resolution}: Depending on context, a domain expert may wish to unify both concepts or keep them separate.
 In the former case, the expert needs to be able to merge concept nodes in the knowledge-base together.  
-In the latter case, the expert needs to be able to override the concept-difference to mark them as being true negatives.
+In the latter case, the expert needs to be able to override the concept-difference to mark them as true negatives.
 
-\subsubsection{Column names share measuring units}
-Column names from the agriculture dataset shared measuring units like hectare and tonnes, these points (3 out of 79) resulted in different data distribution (high KL divergence) and low lexicographical distance due to measuring unit being present in the column names. For example: FRUITHECTARES and VEGHECTARES share the measuring units in the column names which causes the lexicographical distance to be low.
+\smallskip
+\subsubsection{Column names share measuring units, nouns, or verbs}~\\
+In the case of 21 out of 79 potential false negatives, the limiting factor was our choice of similarity measure.
+Common terminology not relevant to the meaning of the concept resulted in low lexical distances.
+Specific examples we encountered were:
+\begin{enumerate*}
+\item Common measuring units like \texttt{FRUITHECTARES} or \texttt{VEGHECTARES} (3 pairs)
+\item Common generic nouns like \texttt{BG\_Demand} or \texttt{MB\_Demand} (13 pairs)
+\item Common verbs or statistical measures like \texttt{AVG}, \texttt{MEAN} or \texttt{MAX} (5 pairs).
+\end{enumerate*}
 
-\textbf{Resolution}: Remove the measuring units from column names.
+\textbf{Resolution}:
+As before, depending on context, a domain expert may wish to unify the underlying concepts (e.g., in the case of units like \texttt{HECTARES}), or not.
+Similarly, this means that the expert needs to be able to merge concept nodes or override the concept difference measure.
+However, in the case of this error, we can also pre-filter many of these cases by deleting common stop-words before computing the lexical distance (e.g., \texttt{AVG}).  
 
-\subsubsection{Column names share noun}
-Some of the column names (13 out of 79) had nouns in common. For instance, BigGameHunting\_RecreationDemand dataset has a column BG\_Demand and MigratoryBirdHunting\_RecreationDemand has a column MB\_Demand. Since the column names share noun, comparing these strings results in low lexicographical distance, but the data distribution are different.
+\smallskip
+\subsubsection{Accidentally low edit distance}~\\
+In 4 remaining cases, the Levenshtein distance incorrectly identifies two column names as similar.  For example the column names \texttt{WTFL\_AVG} and \texttt{WET\_AG} are conceptually distinct, despite their low edit distances.
 
-\textbf{Resolution}: Remove the shared nouns from column names.
+\textbf{Resolution}: 
+This problem might be fixed by a more robust concept distance measure, such as one that relies on an ontology like YAGO~\cite{fabian2007yago}.  
+However, any heuristic measure might still incorrectly label two distinct concepts as similar.  
+Once again, the domain expert must be able to overide the concept-distance function.
 
 
-\subsubsection{Column names share verb}
+\smallskip
+\subsubsection{Distinct names with similar distributions.}~\\
+Out of 120 points analyzed from the upper left quadrant, 51 had similar distributions.
+Certain data distributions were incredibly common.
+For example, there were (unsurprisingly) a large number of uniformly distributed integer values starting from 0: Index attributes.
+These had often had distinct names.
 
-Few column names had words like avg, mean, total, etc. appended at with the names. BAT\_AVG and TAVG share the verb AVG which results in in low lexicographical distance.
+\textbf{Resolution}:
+As in many of the previous cases, based on context the expert may decide that this is a true positive, or may instead decide that the concepts are indeed distinct.
+Similarly, the concepts may need to be merged, or not.
+However, this case preseents one additional challenges: it indicates  matchers linked to distinct concepts that are liable to have similarly high match qualities on the same data --- conflicting matchers.
+Hence, in both cases, the expert also needs to merge the conflicting matchers.
 
-\textbf{Resolution}: Create a list of stop words and remove those from column names.
+\smallskip
+\subsubsection{True positives.}~\\
+Although not the result of an actual problem, true positives indicate the presence of duplicate concepts, and consequently conflicting matchers.  As before, both the concepts and matchers need to be merged.
 
-\subsubsection{Ngram Overestimation of column names}
-Column WTFL\_AVG from biodiversity\_SW\_NHDPv2 and WET\_AG from Wet550\_2017 are classified as similar based on NGram comparison. 
 
-\textbf{Resolution}: Use different string comparison function and compare the results.
-
-\subsubsection{Columns with similar distributions but different names}
-Out of 120 points analyzed from the upper left quadrant, 51 had similar distributions as seen in~\ref{fig:Distribution 3} and~\ref{fig:Distribution 4} although the column names were different.
-
-\textbf{Resolution}: The distributions were described as either uniform or normal, we can use other distributions (zipfian, lognorm) and compare the results. If the results are similar, then these columns can be deleted from the knowledge base.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Challenge7_1}
-	\caption{CDF of data distribution of column PctPasture\_slope9}
-	\label{fig:Distribution 3}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\columnwidth]{graphics/Challenge7_2}
-	\caption{CDF of data distribution of column HistoricBuildings}
-	\label{fig:Distribution 4}
-\end{figure}
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=0.8\columnwidth]{graphics/Challenge7_2}
+% 	\caption{CDF of data distribution of column HistoricBuildings}
+% 	\label{fig:Distribution 4}
+% \end{figure}
 
 
 \subsection{Editor Interface}
-Discuss what we've learned from the above and outline what capabilities the knowledge-base editing interface needs to expose:
+In addition to the match-conflict view, the \systemname editor provides a textual interface to search the knowledge-base for both concepts (by name), and matchers (by matcher-specific properties like the shape parameters of a distribution matcher).  
+As previously noted, selecting pairs of concepts in the match-conflict view shows the pair of concepts and their associated matchers (as the result of a query).
+
+Specifically, to resolve the data issues described above, the editor interface needs to allow experts to:
 \begin{enumerate*}
-	\item Manual definition of data distributions
-	\item Merge Concept Nodes
-	\item Override concept difference: Force concepts to be distinct
-	\item Override concept difference: Define stop-words
+	\item Manually define new data distributions, 
+	\item Merge Concept Nodes, 
+	\item Merge Match Nodes, and
+	\item Override concept difference by forcing concepts to be distinct and defining stop-words
 \end{enumerate*}
+
+
+\tinysection{Editor Commands}
+In addition to directly querying the knowledge-base, the editor provides commands for editing it:
+
+\newcommand{\lokicommand}[2]{\smallskip\noindent \texttt{#1}: #2}
+
+\lokicommand{EDIT [concept]}{
+	Allows the expert to modify the names and matchers associated with a concept
+}
+
+\lokicommand{EDIT [matcher]}{
+Allows the expert to modify the shape parameters and concepts of a matcher, as well as the matcher's default concept.
+}
+
+\lokicommand{MERGE [concept] [concept]}{
+	Combines two concepts, creating a single concept by unioning their associated names and directing the associated matchers of both concepts to the same node.
+}
+
+\lokicommand{MERGE [matcher] OR [matcher]}{
+	Instantiates a new matcher that emits the highest match quality detected by either matcher.  
+	Concepts linked to the two matchers are migrated to the new matcher and the user is acked to pick one as a default for the new matcher.
+}
+
+\lokicommand{REPLACE [matcher] WITH [matcher]}{
+	Deletes the former matcher and links the latter matcher to all of its concepts.  The latter matcher's default concept is preserved.
+}
+
+
+
