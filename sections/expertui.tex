@@ -24,16 +24,16 @@ The entry point into the refinement process is the \systemname editor's match-co
 
 \tinysection{Match Conflict Explorer}
 This view, illustrated in Figure~\ref{fig:editor:scatterplot}, is a scatter plot with each point corresponding to one pair of concepts.
-The point's x- and y-coordinates express, respectively, how different the concepts and their related matchers are.
+A point's x- and y-coordinates express, respectively, how different the concepts and their related matchers are.
 In both cases, a value of 0 indicates that the concepts (resp., the corresponding matchers) are identical, while a value of 1 indicates that the concepts (matchers) are completely different.
 We refer to these as concept- and match-differences.
 In this preliminary version of the system, we define concept-difference to be the lowest Levenshtein distance between any two names associated with each of the concepts.
-We define the match difference as the lowest difference between any two matchers associated with each of the concepts, with inter-matcher differences defined based on their types.
-For pairs of numerical distributions, this value is presently defined as the K/L-Divergence between the distributions.
+We define match difference as the lowest difference between any two matchers associated with a concept, with inter-matcher differences defined based on concept types.
+For pairs of numerical distributions, this value is presently defined as the KL-Divergence between them.
 
-The match conflict explorer helps to identify overlapping or erroneous matchers, as well as duplicate or overlapping concepts.
+The match conflict explorer helps identify overlapping or erroneous matchers, as well as duplicate or overlapping concepts.
 Specifically, the view is divided into four quadrants.  The lower-left, shown in green indicates high concept-similarity and highly overlapping matchers (true positives).  
-The upper-right, shown in red indicates the reveerse (true negatives).
+The upper-right, shown in red indicates the low concept-similarity and low matcher similarity (true negatives).
 The upper-left, shown in blue identifies distinct concepts with similar matchers (potential false positives).  
 The lower-right, shown in yellow identifies potentially similar concepts that have different matchers (potential false negatives).
 
@@ -156,8 +156,8 @@ Similarly, this means that the expert needs to be able to merge concept nodes or
 However, in the case of this error, we can also pre-filter many of these cases by deleting common stop-words before computing the lexical distance (e.g., \texttt{AVG}).  
 
 \smallskip
-\subsubsection{Accidentally low edit distance}~\\
-In 4 remaining cases, the Levenshtein distance incorrectly identifies two column names as similar.  For example the column names \texttt{WTFL\_AVG} and \texttt{WET\_AG} are conceptually distinct, despite their low edit distances.
+\subsubsection{Accidentally Levenshtein distance}~\\
+In 4 remaining cases, the Levenshtein distance incorrectly identifies two column names as similar.  For example the column names \texttt{WTFL\_AVG} and \texttt{WET\_AG} are conceptually distinct, despite their low Levenshtein distances.
 
 \textbf{Resolution}: 
 This problem might be fixed by a more robust concept distance measure, such as one that relies on an ontology like YAGO~\cite{fabian2007yago}.  
