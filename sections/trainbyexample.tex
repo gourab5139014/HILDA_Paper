@@ -1,13 +1,15 @@
 % -*- root: ../paper.tex -*-
 
-To instantiate specific match-quality functions, we merge three sources of information: Learned Heuristics, Expert Augmentations, and User Feedback. 
-The first category, learned heuristics, models the content and distribution of typical instances of columns with a similar name.
-This distribution serves as a baseline match-quality function.
-The second category, expert augmentations, modifies the first, increasing or decreasing values based on expert-provided descriptions of what should and should not appear in columns with this name.
-The final category, user feedback, provides users with a way to confirm or override automated system choices, while also preserving these associations for future use.
+Matcher functions in \systemname come from three places: Learned Heuristics, Expert Augmentations, and User Feedback. 
+In this Section, we address the first of these three.
+Because the learned heuristics are only the first step in an iterative process, our goal is not to develop an exhaustively correct matching scheme.
+Rather, we want something that is both simple and fast.
+Accordingly, throughout this section we make several simplifying assumptions.
 
-\subsection{Learned Heuristics}
-Learned heuristics serve as baseline match-quality functions by modeling typical instances of columns.
+
+
+
+\subsection{Learning Matchers}
 Specific modeling techniques vary by data type, so our first step was to assess what types exist.
 We sampled a collection of 62 data sets from open data portals. 
 %, as discussed later in Experiments (Section~\ref{sec:experiments}).
@@ -16,9 +18,17 @@ We then categorized the 458 columns in our sample into three broad types:
 (1) Numeric data, or any records consisting of digits, at most a single decimal point, and an optional exponent; 
 (2) Enumerated types, based on an arbitrary threshold of atleast 50\% distinct values in the column; and 
 (3) Textual data, or anything else.  
-By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on modeling numeric data.
+By far, the dominant type was numeric, so the preliminary efforts we outline in this paper focus on modeling exclusively \emph{numeric} data.
 
-\tinysection{Numeric Data}
+Regardless of the specific data type however, the overall learning process is similar.
+
+The input to the process is a collection of labeled tabular data.  
+Each column is split out and a type-specific modeling process is run for each column's data pair.
+The output of the modeling process is zero or more matchers that reliably model the column.
+If the process returns at least one matcher, we instantiate a new concept node with the column's name.
+We then add nodes for each matcher returned by the modeling process and edges to the newly instantiated concept node.
+
+\subsection{Creating Matchers for Numeric Data}
 We considered a range of options for modeling numeric data and settled on an approach based on numerical distributions.
 In comparison to more complex approaches like neural networks, this approach is simple, efficient, and well understood.
 Simply put, given a number of example column instances, we explore a range of numerical distributions and select the one with the best fit.
