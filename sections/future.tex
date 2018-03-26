@@ -1,9 +1,10 @@
 % -*- root: ../paper.tex -*-
-Future work...
+We plan several extensions as future work focussed on building and refining a knowledge-base for storing column-naming heuristics. 
 
 \begin{itemize*}
-  \item The use of contextual information (ontologies, units, data domains)
-  \item Meta-queries for columns that *could* be in a query.
-  \item Discovery of meta-data (e.g., units)
-  \item Automatic translation/transformation (units, structure -- GPS vs Textual)
+  \item \textbf{Use of contextual information}:  Contextual information such as ontologies, units  and data domains could be used to augment the \systemname knowledge base (KB). We could use a network of semantic relations such as BabelNet strengthen data models for training the KB as well as providing curation recommendations to experts.~\cite{babelnet} 
+  \item \textbf{Recommendation of columns for query}: Concepts in the KB could be used to recommend columns that \textit{could be} in a query based on the columns that are already present.
+  \item \textbf{\textit{Smarter} Matchers}: We would develop matchers which regocognize a wider spectrum of data. For example, regular expression matchers could be used to detect geolocation data. Matchers which can identify \textit{synonymous} labels could help experts in the curation process. 
+  % Automatic translation/transformation (units, structure -- GPS vs Textual). Use regex.
+  % \item Discovery of meta-data (e.g., units)
 \end{itemize*}
