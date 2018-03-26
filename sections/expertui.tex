@@ -1,12 +1,12 @@
 % -*- root: ../paper.tex -*-
 
 While example data sets provide a good starting point for the \systemname knowledge-base, we anticipate that --- at least initially --- the training data will be too sparse to provide high quality matching suggestions.
-To mitigate the effects of sparsity, \systemname relies on domain experts to curate its knowledge-base, refining existing matchers and defining new matching heuristics.
+To mitigate the effects of sparsity, \systemname relies on domain experts to curate its knowledge-base, refine existing matchers and define new matching heuristics.
 This is intended to be an ongoing process, with incremental feedback from experts and users continuously refining the knowledge-base.
 In this section we outline the design of an interface that streamlines knowledge-base refinement, starting from a knowledge-base trained on example data.
 The central elements of this interface are 
 (1) Visualizing the current quality of the knowledge base;
-(2) Identifying problem name/match-quality function pairs;
+(2) Identifying problems with name/match-quality function pairs;
 (3) Refining records in the knowledge base by removing or merging existing data, or adding expert knowledge.
 
 \begin{figure}
@@ -18,12 +18,12 @@ The central elements of this interface are
 \end{figure}
 
 \subsection{Refinement Interface}
-The initial goal of the \systemname editor is to help domain experts to quickly identify and resolve errors and redundancies in a preliminary knowlege-base freshly trained on new example data.  
+The initial goal of the \systemname editor is to help domain experts quickly identify and resolve errors and redundancies in a preliminary knowlege-base freshly trained on new example data.  
 The entry point into the refinement process is the \systemname editor's match-conflict explorer
 
 
 \tinysection{Match Conflict Explorer}
-This view, illustrated in Figure~\ref{fig:editor:scatterplot}., is a scatter plot, with each point corresponding to one pair of concepts.
+This view, illustrated in Figure~\ref{fig:editor:scatterplot}, is a scatter plot with each point corresponding to one pair of concepts.
 The point's x- and y-coordinates express, respectively, how different the concepts and their related matchers are.
 In both cases, a value of 0 indicates that the concepts (resp., the corresponding matchers) are identical, while a value of 1 indicates that the concepts (matchers) are completely different.
 We refer to these as concept- and match-differences.
