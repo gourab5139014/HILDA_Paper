@@ -132,7 +132,7 @@ Two examples are shown in Figure~\ref{fig:baddistributions}, following bimodal a
 
 \smallskip
 \subsubsection{Same column name in a different context}~\\
-33 points, nearly half of the points sampled from among the potential false negatives, used the same name, but in different context.
+33 points, nearly half of the points sampled from among the potential false negatives, used the same name but in different context.
 For example, among the datasets used for this case study, we had two similar datasets in biodiversity domain. 
 Both datasets consisted of data about flora and fauna, but from two different regions.
 
@@ -158,7 +158,7 @@ However, in the case of this error, we can also pre-filter many of these cases b
 
 \smallskip
 \subsubsection{Accidentally Levenshtein distance}~\\
-In 4 remaining cases, the Levenshtein distance incorrectly identifies two column names as similar.  For example the column names \texttt{WTFL\_AVG} and \texttt{WET\_AG} are conceptually distinct, despite their low Levenshtein distances.
+In 4 remaining cases, the Levenshtein distance incorrectly identifies two column names as similar.  For example the column names \texttt{WTFL\_AVG} and \texttt{WET\_AG} are conceptually distinct, despite their low Levenshtein distances. Using NGram distance might solve this problem. 
 
 \textbf{Resolution}: 
 This problem might be fixed by a more robust concept distance measure, such as one that relies on an ontology like YAGO~\cite{fabian2007yago}.  
@@ -170,13 +170,12 @@ Once again, the domain expert must be able to overide the concept-distance funct
 \subsubsection{Distinct names with similar distributions.}~\\
 Out of 120 points analyzed from the upper left quadrant, 51 had similar distributions.
 Certain data distributions were incredibly common.
-For example, there were (unsurprisingly) a large number of uniformly distributed integer values starting from 0: Index attributes.
-These had often had distinct names.
+For example, there were (unsurprisingly) a large number of uniformly distributed integer values starting from 0 which were Index attributes. These often had distinct names.
 
 \textbf{Resolution}:
-As in many of the previous cases, based on context the expert may decide that this is a true positive, or may instead decide that the concepts are indeed distinct.
+As in many of the previous cases, based on context the expert may decide that this is a true positive, or may  decide that the concepts are indeed distinct.
 Similarly, the concepts may need to be merged, or not.
-However, this case preseents one additional challenges: it indicates  matchers linked to distinct concepts that are liable to have similarly high match qualities on the same data --- conflicting matchers.
+However, this case presents one additional challenges: it indicates  matchers linked to distinct concepts that are liable to have similarly high match qualities on the same data --- conflicting matchers.
 Hence, in both cases, the expert also needs to merge the conflicting matchers.
 
 \smallskip
