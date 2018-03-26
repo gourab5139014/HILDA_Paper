@@ -1,10 +1,21 @@
 % -*- root: ../paper.tex -*-
 We plan several extensions as future work focussed on building and refining a knowledge-base for storing column-naming heuristics. 
 
-\begin{itemize*}
-  \item \textbf{Use of contextual information}:  Contextual information such as ontologies, units  and data domains could be used to augment the \systemname knowledge base (KB). We could use a network of semantic relations such as BabelNet strengthen data models for training the KB as well as providing curation recommendations to experts.~\cite{babelnet} 
-  \item \textbf{Recommendation of columns for query}: Concepts in the KB could be used to recommend columns that \textit{could be} in a query based on the columns that are already present.
-  \item \textbf{\textit{Smarter} Matchers}: We would develop matchers which regocognize a wider spectrum of data. For example, regular expression matchers could be used to detect geolocation data. Matchers which can identify \textit{synonymous} labels could help experts in the curation process. 
+\tinysection{Use of contextual information} 
+Contextual information such as units, data domains, and links between concepts and ontologies could be used to augment the \systemname knowledge-base. 
+For example, we could use a network of semantic relations such as BabelNet strengthen data models for training the knowledge-base as well as providing curation recommendations to experts.~\cite{babelnet} 
+
+\tinysection{Recommendation of columns for query} 
+Concepts in the knowledge-base could be used to recommend columns that \textit{could be} in a query based on the columns that are already present.
+
+\tinysection{\textit{Smarter} Matchers} 
+We plan to develop matchers which regocognize a wider spectrum of data. For example, regular expression matchers could be used to detect geolocation data. Matchers which can identify \textit{synonymous} labels could help experts in the curation process. 
+
+\tinysection{Other applications of context}
+Once discovered, contextual information like units or data domains can be used in other ways.  
+For example, if a column is identified as having a particular type of unit (e.g., `meters'), this knowledge could be used to warn users trying to merge it with an incompatible unit (e.g., `inches').  
+
+
+
   % Automatic translation/transformation (units, structure -- GPS vs Textual). Use regex.
   % \item Discovery of meta-data (e.g., units)
-\end{itemize*}
