@@ -72,12 +72,12 @@ The selected concepts are displayed, along with their corresponding matchers as 
 
 
 \subsection{Understanding Refinement in Practice}
-As experts identify errors or redundancies in the knowledge-base, they will need to patch the knowledge-base accordingly.
-To better understand their needs during this process, we selected 200 concept pairs at random from among the potential false-positives and potential false-negatives.
-We inspected each pair of concepts selected in this way and determined a root cause for each.
-We then grouped these root causes into seven categories.
+As experts identify errors or redundancies in the knowledge base, they will need to rectify them accordingly.
+To better understand their needs during this process, we selected 200 concept pairs at random from the potential false-positives and potential false-negatives.
+We inspected each pair of these concepts to determine a root cause for such a matching.
+Then, we grouped these root causes into seven categories.
 The distributions of root causes of the potential false negatives and false positives are shown in Figures~\ref{fig:datatags:lowerright} and \ref{fig:datatags:upperleft}, respectively.
-We now discuss each category in detail, along with an assessment of remedial actions available for resolving the potential error.
+We now discuss each category in detail, along with an assessment of remedial actions available for resolving them.
 
 \begin{figure}
 	\centering
@@ -96,13 +96,14 @@ We now discuss each category in detail, along with an assessment of remedial act
 \end{figure}
 
 \smallskip
-\subsubsection{Need a better model for training on examples}~\\
+\subsubsection{Need a better model for training by examples}~\\
 For 9 pairs in the lower right quadrant and 69 pairs in the upper left quadrant, the best fit matchers did not adequately describe the data distribution.
-The training phase categorizes data by either uniform or normal distributions. 
-However, we encountered distributions which can be described better using other distributions like zipfian or lognormal rather than normal or uniform.
-Two examples are shown in Figure~\ref{fig:baddistributions}, following bimodal and zipfian distributions respectively, neither of which our preliminary implementation supported.
+The training phase categorizes data by either uniform, normal or log-normal distributions. 
+However, we encountered distributions which can be described better using other distributions like zipfian and other power law distributions.
+% rather than normal or uniform.
+Two examples are shown in Figure~\ref{fig:baddistributions}, following bimodal and zipfian distributions respectively, neither of which were supported by our preliminary implementation.
 
-\textbf{Resolution}: Although a more robust learning process might address this issue (e.g., by supporting more standard distributions like lognormal or zipfian), the only way to truly address this issue definitively is to allow experts to manually define custom distributions (e.g., using splines).
+\textbf{Resolution}: Although a more robust learning process might address this issue ( by supporting more standard distributions like zipfian), another way to definitively address this issue is by allowing experts to manually define custom distributions (e.g., using splines).
 
 \begin{figure}
 	\centering
